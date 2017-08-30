@@ -43,8 +43,7 @@ Creates a one-way binding from a list of nodes in your Firebase database to an a
 
 ### Examples
 
-The following code will make the data stored at the `/items` node as an array and make it available
-as `firebaseData.items` within your state:
+The following code will make the data stored at the `/items` node as an array and make it available as `firebaseData.items` within your state:
 
 ```js
 import { bindAsArray } from 'reduxfire';
@@ -98,8 +97,8 @@ The resulting bound array stored in `firebaseData.items` in the state will be:
 
 ### Description
 
-Creates a one-way binding from node in your Firebase database to an object in this.state of your
-React component. The name of the object stored in `this.state` is specified using the `bindVar`
+Creates a one-way binding from node in your Firebase database to an object in state of your
+redux store. The name of the object stored in the state is specified using the `bindVar`
 variable.
 
 ### Arguments
@@ -107,28 +106,23 @@ variable.
 | Argument | Type | Description |
 |----------|------|-------------|
 | `firebaseRef` | `DatabaseRef` | The database reference to which we are binding. |
-| `bindVar` | String | The name of the attribute within `this.state` which will be bound to your database. |
+| `bindVar` | String | The name of the attribute within redux's state which will be bound to your database. |
 | `cancelCallback` | Function | An optional callback that will be notified if your event subscription is ever canceled because your client does not have permission to read this data (or it had permission but has now lost it). This callback will be passed an `Error` object indicating why the failure occurred. |
 
 ### Examples
 
-The following code will make the data stored at `/users/fred` as an object and make it available as
-`this.state.user` within your component:
+The following code will make the data stored at `/users/fred` as an object and make it available as `firebaseData.user` within your component:
 
 ```js
-componentWillMount: function() {
-  var ref = firebase.database().ref().child("users/fred");
-  this.bindAsObject(ref, "user");
-}
+import { bindAsObject } from 'reduxfire';
+
+var ref = firebase.database().ref().child("users/fred");
+bindAsObject(ref, "user");
 ```
 
-The bound object will contain a `.key` property which specifies the key where the object is stored.
-So in the code above where we bind to `/users/fred`, the bound object will have a `.key` of `"fred"`.
+The bound object will contain a `.key` property which specifies the key where the object is stored. So in the code above where we bind to `/users/fred`, the bound object will have a `.key` of `"fred"`.
 
-If the bound node's value in the database is a primitive (boolean, string, or number), the value
-will be stored in the `.value` property. If the bound node's value is an object, each of the
-object's properties will be stored as properties of the bound object. As an example, let's assume
-the `/users/fred` node you bind comes from the following data:
+If the bound node's value in the database is a primitive (boolean, string, or number), the value will be stored in the `.value` property. If the bound node's value is an object, each of the object's properties will be stored as properties of the bound object. As an example, let's assume the `/users/fred` node you bind comes from the following data:
 
 ```js
 {
@@ -138,7 +132,7 @@ the `/users/fred` node you bind comes from the following data:
 }
 ```
 
-The resulting bound object stored in `this.state.user` will be:
+The resulting bound object stored in `firebaseData.user` will be:
 
 ```js
 {
@@ -160,7 +154,7 @@ As another example, let's assume the `/users/fred` node contains an object:
 }
 ```
 
-The resulting bound object stored in `this.state.user` will be:
+The resulting bound object stored in `firebaseData.user` will be:
 
 ```js
 {
@@ -170,8 +164,7 @@ The resulting bound object stored in `this.state.user` will be:
 }
 ```
 
-As a final example, let's assume the `/users/fred` node does not exist (that is, it has a value of
-`null`). The resulting bound object stored in `this.state.user` will be:
+As a final example, let's assume the `/users/fred` node does not exist (that is, it has a value of `null`). The resulting bound object stored in `this.state.user` will be:
 
 ```js
 {
@@ -191,12 +184,12 @@ Unbinds the binding between your database and the inputted bind variable.
 
 | Argument | Type | Description |
 |----------|------|-------------|
-| `bindVar` | string | The name of the attribute within `this.state` which will be unbound from your database. |
+| `bindVar` | string | The name of the attribute within `state.firebaseData` which will be unbound from your database. |
 
-The following code will unbind `this.state.items` and set its value to `undefined`:
+The following code will unbind `state.firebaseData.items` and set its value to `undefined`:
 
 ```js
-componentWillUnmount: function() {
-  this.unbind("items");
-}
+import { unbind } from 'reduxfire';
+
+unbind("items");
 ```
