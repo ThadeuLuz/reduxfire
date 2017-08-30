@@ -12,7 +12,7 @@
 
 ### Description
 
-The standard [redux reducer](http://redux.js.org/docs/basics/Reducers.html) that you should combine with your other reducers to subsequently create your redux store. You probably don't want to call this method directly. The key used for the reducer will be the key where your bound data will be stored. You can call it anything you want, but the docs will assume you are using the key `firebaseData`.
+The standard [redux reducer](http://redux.js.org/docs/basics/Reducers.html) that you should combine with your other reducers when creating your redux store. You probably don't want to call this method directly. The key used for the reducer will be where your bound data will be stored. You can use any valid key, but we will assume you are using the key `firebaseData`.
 
 ```js
 import { createStore, combineReducers } from 'redux';
@@ -31,7 +31,7 @@ const store = createStore(reducer);
 
 ### Description
 
-Creates a one-way binding from a list of nodes in your Firebase database to an array in your redux store. The name of the array stored in redux's state is specified using the `bindVar` variable.
+Creates a one-way binding from a list of nodes in your Firebase database to an array in the state of redux's store. The name of the array stored in the state is specified using the `bindVar` variable.
 
 ### Arguments
 
@@ -97,8 +97,7 @@ The resulting bound array stored in `firebaseData.items` in the state will be:
 
 ### Description
 
-Creates a one-way binding from node in your Firebase database to an object in state of your
-redux store. The name of the object stored in the state is specified using the `bindVar`
+Creates a one-way binding from node in your Firebase database to an object in the state of redux's store. The name of the object stored in the state is specified using the `bindVar`
 variable.
 
 ### Arguments
@@ -172,7 +171,6 @@ As a final example, let's assume the `/users/fred` node does not exist (that is,
   ".value": null
 }
 ```
-
 
 ## unbind(bindVar)
 
