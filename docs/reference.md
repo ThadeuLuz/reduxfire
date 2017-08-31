@@ -31,7 +31,7 @@ const store = createStore(reducer);
 
 ### Description
 
-Creates a one-way binding from a list of nodes in your Firebase database to an array in the state of Redux's store. The name of the array stored in the state is specified using the `bindVar` variable.
+This method is an [action-creator](http://redux.js.org/docs/basics/Actions.html#action-creators). It creates an action for a one-way binding from a list of nodes in your Firebase database to an array in the state of Redux's store. The name of the array stored in the state is specified using the `bindVar` variable.
 
 ### Arguments
 
@@ -49,7 +49,7 @@ The following code will make the data stored at the `/items` node as an array an
 import { bindAsArray } from 'reduxfire';
 
 var ref = firebase.database().ref("items");
-bindAsArray(ref, "items");
+store.dispatch(bindAsArray(ref, "items"));
 ```
 
 Each record in the bound array will contain a `.key` property which specifies the key where the record is stored. So if you have data at `/items/-Jtjl482BaXBCI7brMT8`, the record for that data will have a `.key` of `"-Jtjl482BaXBCI7brMT8"`.
@@ -97,7 +97,7 @@ The resulting bound array stored in `firebaseData.items` in the state will be:
 
 ### Description
 
-Creates a one-way binding from node in your Firebase database to an object in the state of Redux's store. The name of the object stored in the state is specified using the `bindVar`
+This method is an [action-creator](http://redux.js.org/docs/basics/Actions.html#action-creators). It creates an action for a  one-way binding from node in your Firebase database to an object in the state of Redux's store. The name of the object stored in the state is specified using the `bindVar`
 variable.
 
 ### Arguments
@@ -116,7 +116,7 @@ The following code will make the data stored at `/users/fred` as an object and m
 import { bindAsObject } from 'reduxfire';
 
 var ref = firebase.database().ref().child("users/fred");
-bindAsObject(ref, "user");
+store.dispatch(bindAsObject(ref, "user"));
 ```
 
 The bound object will contain a `.key` property which specifies the key where the object is stored. So in the code above where we bind to `/users/fred`, the bound object will have a `.key` of `"fred"`.
@@ -189,5 +189,5 @@ The following code will unbind `state.firebaseData.items` and set its value to `
 ```js
 import { unbind } from 'reduxfire';
 
-unbind("items");
+store.dispatch(unbind("items"));
 ```
