@@ -12,19 +12,26 @@
 
 ### Description
 
-The standard [Redux reducer](http://redux.js.org/docs/basics/Reducers.html) that you should combine with your other reducers when creating your Redux store. You probably don't want to call this method directly. The key used for the reducer will be where your bound data will be stored. You can use any valid key, but we will assume you are using the key `firebaseData`.
+The standard [Redux reducer](http://redux.js.org/docs/basics/Reducers.html) that you should combine with your other reducers when creating your Redux store. You probably don't want to call this method directly.
+
+The key used for the reducer will be where your bound data will be stored. You can use any valid key, but we will assume you are using the key `firebaseData`.
+
+It is also necessary to install [`redux-thunk`](https://github.com/gaearon/redux-thunk) middleware. This allows us to dispatch other actions asyncronously, and keep your store up to date with de realtime database.
 
 ```js
 import { createStore, combineReducers } from 'redux';
 import { reducer } from 'reduxfire';
+import thunk from 'redux-thunk';
 
-const reducers = {
+const rootReducer = combineReducers({
   // ... your other reducers here ...
   firebaseData: reducer
-};
+});
 
-const reducer = combineReducers(reducers);
-const store = createStore(reducer);
+const store = createStore(
+  rootReducer,
+  applyMiddleware(thunk)
+);
 ```
 
 ## bindAsArray(firebaseRef, bindVar, cancelCallback)
