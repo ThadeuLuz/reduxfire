@@ -12,7 +12,7 @@
 
 ### Description
 
-The standard [redux reducer](http://redux.js.org/docs/basics/Reducers.html) that you should combine with your other reducers when creating your redux store. You probably don't want to call this method directly. The key used for the reducer will be where your bound data will be stored. You can use any valid key, but we will assume you are using the key `firebaseData`.
+The standard [Redux reducer](http://redux.js.org/docs/basics/Reducers.html) that you should combine with your other reducers when creating your Redux store. You probably don't want to call this method directly. The key used for the reducer will be where your bound data will be stored. You can use any valid key, but we will assume you are using the key `firebaseData`.
 
 ```js
 import { createStore, combineReducers } from 'redux';
@@ -31,14 +31,14 @@ const store = createStore(reducer);
 
 ### Description
 
-Creates a one-way binding from a list of nodes in your Firebase database to an array in the state of redux's store. The name of the array stored in the state is specified using the `bindVar` variable.
+Creates a one-way binding from a list of nodes in your Firebase database to an array in the state of Redux's store. The name of the array stored in the state is specified using the `bindVar` variable.
 
 ### Arguments
 
 | Argument | Type | Description |
 |----------|------|-------------|
 | `firebaseRef` | `DatabaseRef` | The database reference to which we are binding. |
-| `bindVar` | String | The name of the attribute within redux's state which will be bound to your database. |
+| `bindVar` | String | The name of the attribute within Redux's state which will be bound to your database. |
 | `cancelCallback` | Function | An optional callback that will be notified if your event subscription is ever canceled because your client does not have permission to read this data (or it had permission but has now lost it). This callback will be passed an `Error` object indicating why the failure occurred. |
 
 ### Examples
@@ -97,7 +97,7 @@ The resulting bound array stored in `firebaseData.items` in the state will be:
 
 ### Description
 
-Creates a one-way binding from node in your Firebase database to an object in the state of redux's store. The name of the object stored in the state is specified using the `bindVar`
+Creates a one-way binding from node in your Firebase database to an object in the state of Redux's store. The name of the object stored in the state is specified using the `bindVar`
 variable.
 
 ### Arguments
@@ -105,7 +105,7 @@ variable.
 | Argument | Type | Description |
 |----------|------|-------------|
 | `firebaseRef` | `DatabaseRef` | The database reference to which we are binding. |
-| `bindVar` | String | The name of the attribute within redux's state which will be bound to your database. |
+| `bindVar` | String | The name of the attribute within Redux's state which will be bound to your database. |
 | `cancelCallback` | Function | An optional callback that will be notified if your event subscription is ever canceled because your client does not have permission to read this data (or it had permission but has now lost it). This callback will be passed an `Error` object indicating why the failure occurred. |
 
 ### Examples
