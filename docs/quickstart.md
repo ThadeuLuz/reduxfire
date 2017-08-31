@@ -18,6 +18,7 @@ our CDN:
 ```js
 <!-- Redux -->
 <script src="https://unpkg.com/redux@latest/dist/redux.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/redux-thunk/2.2.0/redux-thunk.js"></script>
 
 <!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>
@@ -58,18 +59,18 @@ We'll need to initialize the Firebase SDK before we can use it. This should happ
 
 ReduxFire exposes a [`reducer`](http://redux.js.org/docs/basics/Reducers.html) which is a pure function that takes the previous state and an action, and returns the next state. Our reducer specifically will handle the bind and unbind actions and will store your ref's data in its state.
 
-
-
- This reducer will allow us to dispatch actions that update our state with a **one-way data binding from our Firebase database to our Redux's `state` variable**. Add the `reducer` when creating your store, optionally combining with other reducers:
+ This reducer will allow us to dispatch actions that update our state with a **one-way data binding from our Firebase database to our Redux's `state`**. Add the `reducer` when creating your store, optionally combining with other reducers. Also, do not forget to apply the [`redux-thunk`](https://github.com/gaearon/redux-thunk) middleware:
 
 ```js
-const reducers = {
+const rootReducer = combineReducers({
   // ... your other reducers here ...
-  firebaseData: ReduxFire.reducer
-};
+  firebaseData: reducer
+});
 
-const reducer = Redux.combineReducers(reducers);
-const store = Redux.createStore(reducer);
+const store = createStore(
+  rootReducer,
+  applyMiddleware(ReduxThunk.default)
+);
 ```
 
 In this example we are using `firebaseData` as the key for combining reducers. This means that the state returned by our reducer will be stored under this key. Feel free to use anything else if you wish, but `firebaseData` will be used on the rest of this guide.
