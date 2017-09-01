@@ -67,7 +67,7 @@ export const validateBindVar = (bindVar) => {
   }
 
   // Firebase does not allow node keys to contain the following characters
-  if (/[[\].#$/\u0000-\u001F\u007F]/.test(bindVar)) {
+  if (/[[\]#$/\u0000-\u001F\u007F]/.test(bindVar)) {
     throwError(`Bind variable cannot contain any of the following characters: . # $ ] [ /. Got: ${bindVar}`);
   }
 };
@@ -93,6 +93,23 @@ export const validateFirebaseRef = (firebaseRef) => {
 export const removeProp = (object, prop) => {
   const { [prop]: omit, ...others } = object;
   return others;
+};
+
+
+export const get = (object, bindVar) => (
+  !bindVar ? object : bindVar.split('.').reduce((prev, keysStr) => (prev || {})[keysStr], object)
+);
+
+export const set = (object, bindVar, value) => {
+  const path = bindVar.split('.');
+
+  const updateObject = path.reduceRight((previousObject, subpath) => {
+    path.pop();
+    const complement = get(object, path.join('.')); // data previously on the path
+    return Object.assign({}, complement, { [subpath]: previousObject });
+  }, value);
+
+  return Object.assign({}, updateObject);
 };
 
 
