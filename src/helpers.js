@@ -23,15 +23,6 @@ export const getKey = snap => ((typeof snap.key === 'function') ? snap.key() : s
 
 
 /**
- * Returns the reference of a Firebase snapshot or reference across SDK versions.
- *
- * @param {DataSnapshot|DatabaseReference} snap - A Firebase snapshot.
- * @return {DatabaseReference} ref - The Firebase reference corresponding to the inputted snapshot.
- */
-// export const getRef = snap => ((typeof snap.ref === 'function') ? snap.ref() : snap.ref);
-
-
-/**
  * Creates a new record given a key-value pair.
  *
  * @param {string} key The new record's key.
@@ -96,12 +87,14 @@ export const removeProp = (object, prop) => {
 };
 
 
+const bindVar2Path = bindVar => bindVar.split('.').filter(p => !!p);
+
 export const get = (object, bindVar) => (
-  !bindVar ? object : bindVar.split('.').reduce((prev, keysStr) => (prev || {})[keysStr], object)
+  !bindVar ? object : bindVar2Path(bindVar).reduce((prev, keysStr) => (prev || {})[keysStr], object)
 );
 
 export const set = (object, bindVar, value) => {
-  const path = bindVar.split('.');
+  const path = bindVar2Path(bindVar);
 
   const updateObject = path.reduceRight((previousObject, subpath) => {
     path.pop();
@@ -118,15 +111,16 @@ export const set = (object, bindVar, value) => {
 // -----------------------------------------------------------------------------
 
 
-export const addItem = (list, item) => ([item, ...list]);
+export const addItem = (list = [], item) => ([item, ...list]);
 
-export const removeItem = (list, index) => ([
+export const removeItem = (list = [], index) => ([
   ...list.slice(0, index),
   ...list.slice(index + 1),
 ]);
 
-export const replaceItem = (list, item, index) => ([
+export const replaceItem = (list = [], index, item) => ([
   ...list.slice(0, index),
+  item,
   ...list.slice(index + 1),
 ]);
 
