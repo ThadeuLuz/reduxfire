@@ -11,9 +11,6 @@
   },
   "author": "Thadeu Luz",
   "license": "MIT",
-  "quokka": {
-    "babel": true
-  },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
