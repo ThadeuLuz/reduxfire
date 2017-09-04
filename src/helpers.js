@@ -4,33 +4,45 @@
 
 
 /**
- * Throws a formatted error message
+ * Throws a formatted error message.
  *
- * @param {string} message
- * @param {number} code
+ * @param {string} message - The error message to throw.
  */
 export const throwError = (message) => {
   throw new Error(`ReduxFire: ${message}`);
 };
 
+
 /**
  * Returns the key of a Firebase snapshot across SDK versions.
  *
- * @param {DataSnapshot} snap A Firebase snapshot.
- * @return {string|null} key The Firebase snapshot's key.
+ * @param {DataSnapshot} snapshot - A Firebase snapshot.
+ * @return {string|null} key - The Firebase snapshot's key.
  */
-export const getKey = snap => ((typeof snap.key === 'function') ? snap.key() : snap.key);
+export const getKey = (snap) => {
+  let key;
+
+  if (typeof snap.key === 'function') {
+    key = snap.key();
+  } else if (typeof snap.key === 'string' || snap.key === null) {
+    key = snap.key;
+  } else {
+    key = snap.name();
+  }
+
+  return key;
+};
 
 
 /**
  * Creates a new record given a key-value pair.
  *
- * @param {string} key The new record's key.
- * @param {any} value The new record's value.
+ * @param {string} key - The new record's key.
+ * @param {any} value - The new record's value.
  * @return {Object} The new record.
  */
 export const createRecord = (key, value) => ((typeof value === 'object' && value !== null) ?
-  { '.key': key, ...value } : { '.key': key, '.value': value });
+  { ...value, '.key': key } : { '.key': key, '.value': value });
 
 
 //
@@ -41,7 +53,7 @@ export const createRecord = (key, value) => ((typeof value === 'object' && value
 /**
  * Validates the name of the variable which is being bound.
  *
- * @param {string} bindVar The variable which is being bound.
+ * @param {string} bindVar - The variable which is being bound.
  */
 export const validateBindVar = (bindVar) => {
   if (typeof bindVar !== 'string') {
@@ -80,9 +92,15 @@ export const validateFirebaseRef = (firebaseRef) => {
 // Pure Object Manipulation functions
 // -----------------------------------------------------------------------------
 
-
-export const removeProp = (object, prop) => {
-  const { [prop]: omit, ...others } = object;
+/**
+ * Removes a property from an object.
+ *
+ * @param  {type} object - The object to clone and
+ * @param  {type} prop   {description}
+ * @return {type} {description}
+ */
+export const omit = (object, prop) => {
+  const { [prop]: omitted, ...others } = object;
   return others;
 };
 
@@ -124,4 +142,8 @@ export const replaceItem = (list = [], index, item) => ([
   ...list.slice(index + 1),
 ]);
 
-export const findKeyIndex = (list, key) => list.findIndex(item => item['.key'] === key);
+export const findKeyIndex = (list, key) => {
+  const index = list.findIndex(item => item['.key'] === key);
+  if (index === -1) throwError(`No item with key '${key}' in list`);
+  return index;
+};
