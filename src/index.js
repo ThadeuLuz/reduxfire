@@ -1,8 +1,4 @@
-import {
-  throwError,
-  validateBindVar,
-  validateFirebaseRef,
-} from './helpers';
+import { throwError, validateBindVar, validateFirebaseRef } from './helpers';
 
 import {
   updateValue,
@@ -22,9 +18,9 @@ let dispatch = () => {
 
 
 /**
- * Saves a reference to the dispatch function locally.
+ * Sets the dispatch function on the library.
  *
- * @param {function} dispatchFunction - The dispatch function to store
+ * @param {function} dispatchFunction - The dispatch function to use.
  */
 export const setDispatch = (dispatchFunction) => {
   if (typeof dispatchFunction !== 'function') {
@@ -35,17 +31,18 @@ export const setDispatch = (dispatchFunction) => {
 
 
 /**
+ * Creates a binding between Firebase and the inputted bind variable as an object.
  *
- * @param {*} firebaseRef
- * @param {*} bindVar
- * @param {*} cancelCallback
+ * @param {Firebase} firebaseRef - The Firebase ref whose data to bind.
+ * @param {string} bindVar - The state variable to which to bind the data.
+ * @param {function} cancelCallback - The Firebase reference's cancel callback.
  */
 export const bindAsObject = (firebaseRef, bindVar, cancelCallback) => {
   validateBindVar(bindVar);
   validateFirebaseRef(firebaseRef);
 
   if (unbindFunctions[bindVar]) {
-    throwError(`The bindVar '${bindVar}' is already bound to a Firebase reference`);
+    throwError(`The bind variable '${bindVar}' is already bound to a Firebase reference`);
   }
 
   const onValueListener = (snap) => {
@@ -55,19 +52,27 @@ export const bindAsObject = (firebaseRef, bindVar, cancelCallback) => {
   firebaseRef.on('value', onValueListener, cancelCallback);
 
   // Stores the unbind function for this bindVar in our dictionary
-  unbindFunctions[bindVar] = () => {
+  unbindFunctions[bindVar] = (callback) => {
     firebaseRef.off('value', onValueListener); // Turns off the listener
     delete unbindFunctions[bindVar]; // Deletes the unbind function from the dictionary
     dispatch(removeValue(bindVar)); // Removes the data from the state
+    callback();
   };
 };
 
+/**
+ * Creates a binding between Firebase and the inputted bind variable as an array.
+ *
+ * @param {Firebase} firebaseRef - The Firebase ref whose data to bind.
+ * @param {string} bindVar - The state variable to which to bind the data.
+ * @param {function} cancelCallback - The Firebase reference's cancel callback.
+ */
 export const bindAsArray = (firebaseRef, bindVar, cancelCallback) => {
   validateBindVar(bindVar);
   validateFirebaseRef(firebaseRef);
 
   if (unbindFunctions[bindVar]) {
-    throwError(`The bindVar '${bindVar}' is already bound to a Firebase reference`);
+    throwError(`The bind variable '${bindVar}' is already bound to a Firebase reference`);
   }
 
   const arrayChildAdded = (snap) => {
@@ -87,23 +92,34 @@ export const bindAsArray = (firebaseRef, bindVar, cancelCallback) => {
   firebaseRef.on('child_removed', arrayChildRemoved, cancelCallback);
 
   // Stores the unbind function for this bindVar in our dictionary
-  unbindFunctions[bindVar] = () => {
+  unbindFunctions[bindVar] = (callback) => {
     // Turns off the listeners
     firebaseRef.off('child_added', arrayChildAdded);
     firebaseRef.off('child_changed', arrayChildChanged);
     firebaseRef.off('child_removed', arrayChildRemoved);
     delete unbindFunctions[bindVar]; // Deletes the unbind function from the dictionary
     dispatch(removeValue(bindVar)); // Removes the data from the state
+    callback();
   };
 };
 
-export const unbind = (bindVar) => {
+/**
+ * Removes the binding between Firebase and the inputted bind variable.
+ *
+ * @param {string} bindVar - The state variable to which the data is bound.
+ * @param {function} callback - Called when the data is unbound and the state has been updated.
+ */
+export const unbind = (bindVar, callback = () => { }) => {
   validateBindVar(bindVar);
   const unbindFunction = unbindFunctions[bindVar];
 
   if (!unbindFunction) {
-    throwError(`The bindvar '${bindVar}' is not bound to a Firebase reference`);
+    throwError(`The bind variable '${bindVar}' is not bound to a Firebase reference`);
   }
 
-  unbindFunction();
+  if (typeof dispatchFunction !== 'function') {
+    throwError(`The callback argument needs to be a function, istead got '${callback}'`);
+  }
+
+  unbindFunction(callback);
 };
