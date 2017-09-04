@@ -1,6 +1,6 @@
 import { throwError, validateBindVar, validateFirebaseRef } from './helpers';
 
-import {
+import reducer, {
   updateValue,
   removeValue,
   addArrayItem,
@@ -8,6 +8,7 @@ import {
   removeArrayItem,
 } from './store';
 
+export { reducer };
 
 const unbindFunctions = {};
 
