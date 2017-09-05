@@ -118,8 +118,8 @@ export const unbind = (bindVar, callback = () => { }) => {
     throwError(`The bind variable '${bindVar}' is not bound to a Firebase reference`);
   }
 
-  if (typeof dispatchFunction !== 'function') {
-    throwError(`The callback argument needs to be a function, istead got '${callback}'`);
+  if (typeof callback !== 'function') {
+    throwError(`The callback argument needs to be a function, istead got '${typeof callback}'`);
   }
 
   unbindFunction(callback);
