@@ -6,13 +6,13 @@ import reducer, {
   addArrayItem,
   updateArrayItem,
   removeArrayItem,
-} from './store';
+} from './duck';
 
 export { reducer };
 
 const unbindFunctions = {};
 
-// The default dispatch throws an error if the dispatch is not set
+// The default local dispatch throws an error if the dispatch is not set
 let dispatch = () => {
   throwError("You have to call 'setDispatch(store.dispatch)' before calling 'unbind', 'bindAsArray' or 'bindAsObject'");
 };
