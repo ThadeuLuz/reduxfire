@@ -2,7 +2,7 @@
   "name": "reduxfire",
   "version": "0.1.0",
   "description": "",
-  "main": "lib/ReduxFire.js",
+  "main": "dist/ReduxFire.js",
   "scripts": {
     "build": "webpack --env build",
     "dev": "webpack --progress --colors --watch --env dev",
