@@ -104,13 +104,13 @@ export const addArrayItem = (bindVar, snap) => ({
 });
 
 
-export const updateArrayItem = (bindVar, key, record) => ({
+export const updateArrayItem = (bindVar, snap) => ({
   type: UPDATE_ARRAY_ITEM,
-  payload: { bindVar, key, record },
+  payload: { bindVar, snap },
 });
 
 
-export const removeArrayItem = (bindVar, key) => ({
+export const removeArrayItem = (bindVar, snap) => ({
   type: REMOVE_ARRAY_ITEM,
-  payload: { bindVar, key },
+  payload: { bindVar, snap },
 });
