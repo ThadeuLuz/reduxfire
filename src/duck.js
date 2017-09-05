@@ -16,11 +16,11 @@ import {
 // -----------------------------------------------------------------------------
 
 
-const UPDATE_VALUE = '@@reeduxfire/UPDATE_VALUE';
-const REMOVE_VALUE = '@@reeduxfire/REMOVE_VALUE';
-const ADD_ARRAY_ITEM = '@@reeduxfire/ADD_ARRAY_ITEM';
-const UPDATE_ARRAY_ITEM = '@@reeduxfire/UPDATE_ARRAY_ITEM';
-const REMOVE_ARRAY_ITEM = '@@reeduxfire/REMOVE_ARRAY_ITEM';
+export const UPDATE_VALUE = '@@reeduxfire/UPDATE_VALUE';
+export const REMOVE_VALUE = '@@reeduxfire/REMOVE_VALUE';
+export const ADD_ARRAY_ITEM = '@@reeduxfire/ADD_ARRAY_ITEM';
+export const UPDATE_ARRAY_ITEM = '@@reeduxfire/UPDATE_ARRAY_ITEM';
+export const REMOVE_ARRAY_ITEM = '@@reeduxfire/REMOVE_ARRAY_ITEM';
 
 
 //
