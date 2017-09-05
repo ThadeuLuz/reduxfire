@@ -1,8 +1,5 @@
 {
   "extends": "airbnb-base",
-  "plugins": [
-    "import"
-  ],
   "globals": {
     "expect": true,
     "describe": true,
