@@ -20,17 +20,15 @@ export const throwError = (message) => {
  * @return {string|null} key - The Firebase snapshot's key.
  */
 export const getKey = (snap) => {
-  let key;
-
   if (typeof snap.key === 'function') {
-    key = snap.key();
-  } else if (typeof snap.key === 'string' || snap.key === null) {
-    key = snap.key;
-  } else {
-    key = snap.name();
+    return snap.key();
   }
 
-  return key;
+  if (typeof snap.key === 'string' || snap.key === null) {
+    return snap.key;
+  }
+
+  return snap.name();
 };
 
 
