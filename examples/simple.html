@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Redux basic example</title>
+  <script src="https://unpkg.com/redux@latest/dist/redux.min.js"></script>
+  <script src="../dist/reduxfire.umd.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.3.0/firebase.js"></script>
+</head>
+
+<body>
+  <div>
+    <p>
+      <button id="bindAsObject">bindAsObject</button>
+      <button id="unbindAsObject">unbindAsObject</button>
+      <button id="bindAsArray">bindAsArray</button>
+      <button id="unbindAsArray">unbindAsArray</button>
+    </p>
+    <p>
+      <button id="addNumber">Add Number</button>
+      <button id="addBoolean">Add Boolean</button>
+      <button id="addString">Add String</button>
+      <button id="addObject">Add Object</button>
+      <button id="addInvalid">Add Invalid Value</button>
+      <button id="removeFirst">Remove First</button>
+    </p>
+    <p>
+      State:
+      <pre id="value">0</pre>
+    </p>
+  </div>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyAUp5E2n1BhqYDeRsSqXvs9X90LVGFz5mY",
+      databaseURL: "https://redfire-3a130.firebaseio.com",
+      projectId: "redfire-3a130",
+    };
+    firebase.initializeApp(config);
+    var ref = firebase.database().ref().child("items");
+
+    // Create Store
+    var store = Redux.createStore(
+      ReduxFire.reducer,
+      // Enables redux devtools
+      // see https://github.com/zalmoxisus/redux-devtools-extension#usage
+      window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    );
+
+    // Configure ReduxFire
+    ReduxFire.setDispatch(store.dispatch);
+
+
+    // Render data to HTML
+    var valueEl = document.getElementById('value')
+
+    function render() {
+      valueEl.innerHTML = JSON.stringify(store.getState(), null, 2)
+    }
+
+    render()
+    store.subscribe(render)
+
+    // Listeners
+
+    document.getElementById('bindAsObject')
+      .addEventListener('click', function () {
+        ReduxFire.bindAsObject(ref, 'bindAs.object');
+      });
+
+    document.getElementById('unbindAsObject')
+      .addEventListener('click', function () {
+        ReduxFire.unbind('bindAs.object');
+      });
+
+    document.getElementById('bindAsArray')
+      .addEventListener('click', function () {
+        ReduxFire.bindAsArray(ref, 'bindAs.array');
+      });
+
+    document.getElementById('unbindAsArray')
+      .addEventListener('click', function () {
+        ReduxFire.unbind('bindAs.array');
+      });
+
+
+    document.getElementById('addNumber')
+      .addEventListener('click', function () {
+        ref.push(1);
+      });
+
+    document.getElementById('addBoolean')
+      .addEventListener('click', function () {
+        ref.push(true);
+      });
+
+    document.getElementById('addString')
+      .addEventListener('click', function () {
+        ref.push("Hello World");
+      });
+
+    document.getElementById('addInvalid')
+      .addEventListener('click', function () {
+        ref.push('invalid');
+      });
+
+    document.getElementById('addObject')
+      .addEventListener('click', function () {
+        ref.push({ hello: 'world' });
+      });
+
+    document.getElementById('removeFirst')
+      .addEventListener('click', function () {
+        ref.once('value', function (snap) {
+          var value = snap.val();
+          if (value) var firstKey = Object.keys(value)[0];
+          if (firstKey) ref.child(firstKey).remove();
+        });
+      });
+  </script>
+</body>
+
+</html>
