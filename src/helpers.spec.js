@@ -10,7 +10,7 @@ import {
   addItem,
   removeItem,
   replaceItem,
-} from '../src/helpers';
+} from './helpers';
 
 const lib = {
   invalidFirebaseRefs: [null, undefined, true, false, [], 0, 5, '', 'a', ['hi', 1]],

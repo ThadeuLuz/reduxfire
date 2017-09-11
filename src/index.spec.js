@@ -5,7 +5,7 @@ import {
   bindAsArray,
   bindAsObject,
   unbind,
-} from '../src/index';
+} from './index';
 
 const config = {
   apiKey: 'AIzaSyAUp5E2n1BhqYDeRsSqXvs9X90LVGFz5mY',

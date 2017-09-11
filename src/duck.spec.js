@@ -1,7 +1,7 @@
 import {
   UPDATE_VALUE,
   updateValue,
-} from '../src/duck';
+} from './duck';
 
 describe('actions', () => {
   it('should create an action to add a todo', () => {
