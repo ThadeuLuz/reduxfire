@@ -29,6 +29,12 @@ it('Lib should not be mutatable', () => {
   expect(() => { lib.simpleArray.push(1); }).toThrow();
 });
 
+
+//
+// Helpers
+// -----------------------------------------------------------------------------
+
+
 describe('Given the helper functions,', () => {
   describe('throwError()', () => {
     it('should throw an Error', () => {
@@ -44,6 +50,9 @@ describe('Given the firebase functions,', () => {
     });
     it('should return a key on new syntax', () => {
       expect(getKey({ key: () => 'value' })).toBe('value');
+    });
+    it('should return a key on name', () => {
+      expect(getKey({ name: () => 'value' })).toBe('value');
     });
   });
 });
