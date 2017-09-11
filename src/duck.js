@@ -29,11 +29,14 @@ export const REMOVE_ARRAY_ITEM = '@@reeduxfire/REMOVE_ARRAY_ITEM';
 
 
 /**
+ * Reducer for reduxfire.
  *
- * @param {*} state
- * @param {*} param1
+ * @param {object} state - The previous state.
+ * @param {object} action - An object with the action that modifies the state.
+ * @returns {object} - The new state.
  */
-export default (state = {}, { type, payload = {} }) => {
+export default (state = {}, action = {}) => {
+  const { type, payload = {} } = action;
   const { bindVar, snap } = payload;
 
   switch (type) {
@@ -74,29 +77,33 @@ export default (state = {}, { type, payload = {} }) => {
 
 
 /**
- * Updates the data at a bind variable on the state.
+ * Returns an action that updates the data at a bind variable on the state.
  *
  * @param {string} bindVar - Bind variable to save data on.
- * @param {*} snap - Record to save.
- * @return {Object} Returns an action.
+ * @param {DataSnapshot} snap - A Firebase snapshot of the data to save.
+ * @return {Object} The updateValue action.
  */
 export const updateValue = (bindVar, snap) => ({
   type: UPDATE_VALUE,
   payload: { bindVar, snap },
 });
 
+
 /**
- * Removes all the data in a bind variable
+ * Returns an action that removes all the data in a bind variable.
  *
- * @param {*} bindVar - Bind variable to remove.
+ * @param {string} bindVar - Bind variable to remove.
+ * @returns {object} - The removeValue action.
  */
 export const removeValue = bindVar => ({ type: REMOVE_VALUE, payload: { bindVar } });
 
+
 /**
+ * Returns an action that adds an item to an array on a bind variable.
  *
- *
- * @param {string} bindVar
- * @param {*} record
+ * @param {string} bindVar - Bind variable to update.
+ * @param {DataSnapshot} snap - A Firebase snapshot of the data to add to array.
+ * @returns {object} - The addArrayItem action.
  */
 export const addArrayItem = (bindVar, snap) => ({
   type: ADD_ARRAY_ITEM,
@@ -104,12 +111,26 @@ export const addArrayItem = (bindVar, snap) => ({
 });
 
 
+/**
+ * Returns an action that updates an item on an array on a bind variable.
+ *
+ * @param {string} bindVar - Bind variable to update.
+ * @param {DataSnapshot} snap - A Firebase snapshot of the data to update on the array.
+ * @returns {object} - The updateArrayItem action.
+ */
 export const updateArrayItem = (bindVar, snap) => ({
   type: UPDATE_ARRAY_ITEM,
   payload: { bindVar, snap },
 });
 
 
+/**
+ * Returns an action that removes an item from an array on a bind variable.
+ *
+ * @param {string} bindVar - Bind variable to update.
+ * @param {DataSnapshot} snap - A Firebase snapshot of the data to remove from the array.
+ * @returns {object} - The addArrayItem action.
+ */
 export const removeArrayItem = (bindVar, snap) => ({
   type: REMOVE_ARRAY_ITEM,
   payload: { bindVar, snap },
