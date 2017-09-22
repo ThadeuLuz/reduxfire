@@ -31,4 +31,4 @@ node_modules
 .vscode
 
 dist
-example/reduxfire.js
+examples/reduxfire.js
