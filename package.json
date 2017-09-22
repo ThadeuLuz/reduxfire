@@ -7,8 +7,10 @@
   "browser": "dist/reduxfire.umd.js",
   "scripts": {
     "build": "rollup -c",
-    "dev": "rollup -c -w",
+    "start": "rollup -c -w",
     "test": "jest",
+    "preexample": "npm run build",
+    "example": "cp ./dist/reduxfire.umd.js ./examples/reduxfire.js && http-server ./examples -o",
     "test:watch": "npm test -- --watch",
     "test:coverage": "npm test -- --coverage"
   },
@@ -22,6 +24,7 @@
     "eslint-config-airbnb-base": "^12.0.0",
     "eslint-plugin-import": "^2.7.0",
     "firebase": "^4.3.0",
+    "http-server": "^0.10.0",
     "jest": "^21.0.1",
     "rollup": "^0.49.2",
     "rollup-plugin-babel": "^3.0.2"
