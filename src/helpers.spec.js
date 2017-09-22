@@ -25,7 +25,7 @@ const lib = {
 
 deepFreeze(lib);
 
-it('Lib should not be mutatable', () => {
+it('Lib should be immutable', () => {
   expect(() => { lib.simpleArray.push(1); }).toThrow();
 });
 
@@ -35,34 +35,45 @@ it('Lib should not be mutatable', () => {
 // -----------------------------------------------------------------------------
 
 
-describe('Given the helper functions,', () => {
-  describe('throwError()', () => {
-    it('should throw an Error', () => {
-      expect(() => { throwError('error'); }).toThrow();
-    });
+describe('throwError()', () => {
+  it('should throw an Error', () => {
+    expect(() => { throwError('error'); }).toThrow();
   });
 });
 
-describe('Given the firebase functions,', () => {
-  describe('getKey()', () => {
-    it('should return a key on old syntax', () => {
-      expect(getKey({ key: 'value' })).toBe('value');
-    });
-    it('should return a key on new syntax', () => {
-      expect(getKey({ key: () => 'value' })).toBe('value');
-    });
-    it('should return a key on name', () => {
-      expect(getKey({ name: () => 'value' })).toBe('value');
-    });
+describe('getKey()', () => {
+  it('should return a key on old syntax', () => {
+    expect(getKey({ key: 'value' })).toBe('value');
+  });
+
+  it('should return a key on new syntax', () => {
+    expect(getKey({ key: () => 'value' })).toBe('value');
+  });
+
+  it('should return a key on name()', () => {
+    expect(getKey({ name: () => 'value' })).toBe('value');
   });
 });
 
-describe('Given the object functions,', () => {
-  it('set() should return an object with nested keys', () => {
+
+//
+// Object Functions
+// -----------------------------------------------------------------------------
+
+
+describe('set()', () => {
+  it('should return an object with nested keys', () => {
+    expect(set(lib.simpleObject)).toEqual({ b: 2, a: { b: { c: 1 } } });
+    // expect(set(lib.simpleObject, 'a.b.c', 1)).toEqual({ b: 2, a: { b: { c: 1 } } });
+  });
+
+  it('should return an object with nested keys', () => {
     expect(set(lib.simpleObject, 'a.b.c', 1)).toEqual({ b: 2, a: { b: { c: 1 } } });
   });
+});
 
-  it('get() should return the nested value', () => {
+describe('get()', () => {
+  it('should return the nested value', () => {
     expect(get(lib.nedtedObject, 'a.b.c')).toBe(1);
   });
 });
