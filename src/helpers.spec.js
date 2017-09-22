@@ -14,7 +14,30 @@ import {
 
 const lib = {
   invalidFirebaseRefs: [null, undefined, true, false, [], 0, 5, '', 'a', ['hi', 1]],
-  invalidBindVars: ['', 1, true, false, [], {}, [1, 2], { a: 1 }, null, undefined, 'te$st', 'te[st', 'te]st', 'te#st', 'te/st', 'a#i]$da[s', 'te/nst', 'te/rst', 'te/u0000st', 'te/u0015st', 'te/007Fst', Array(800).join('a')],
+  invalidBindVars: [
+    '',
+    1,
+    true,
+    false,
+    [],
+    {},
+    [1, 2],
+    { a: 1 },
+    null,
+    undefined,
+    'te$st',
+    'te[st',
+    'te]st',
+    'te#st',
+    'te/st',
+    'a#i]$da[s',
+    'te/nst',
+    'te/rst',
+    'te/u0000st',
+    'te/u0015st',
+    'te/007Fst',
+    Array(800).join('a'),
+  ],
   simpleObject: { a: 1, b: 2 },
   nedtedObject: { a: { b: { c: 1 } } },
   simpleArray: [
@@ -26,18 +49,20 @@ const lib = {
 deepFreeze(lib);
 
 it('Lib should be immutable', () => {
-  expect(() => { lib.simpleArray.push(1); }).toThrow();
+  expect(() => {
+    lib.simpleArray.push(1);
+  }).toThrow();
 });
-
 
 //
 // Helpers
 // -----------------------------------------------------------------------------
 
-
 describe('throwError()', () => {
   it('should throw an Error', () => {
-    expect(() => { throwError('error'); }).toThrow();
+    expect(() => {
+      throwError('error');
+    }).toThrow();
   });
 });
 
@@ -55,18 +80,11 @@ describe('getKey()', () => {
   });
 });
 
-
 //
 // Object Functions
 // -----------------------------------------------------------------------------
 
-
 describe('set()', () => {
-  it('should return an object with nested keys', () => {
-    expect(set(lib.simpleObject)).toEqual({ b: 2, a: { b: { c: 1 } } });
-    // expect(set(lib.simpleObject, 'a.b.c', 1)).toEqual({ b: 2, a: { b: { c: 1 } } });
-  });
-
   it('should return an object with nested keys', () => {
     expect(set(lib.simpleObject, 'a.b.c', 1)).toEqual({ b: 2, a: { b: { c: 1 } } });
   });
@@ -100,4 +118,3 @@ describe('Given the array functions,', () => {
     expect(newArray.length).toBe(lib.simpleArray.length - 1);
   });
 });
-
