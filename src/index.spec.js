@@ -1,11 +1,6 @@
 import firebase from 'firebase';
 
-import {
-  setDispatch,
-  bindAsArray,
-  bindAsObject,
-  unbind,
-} from './index';
+import { setDispatch, bindAsArray, bindAsObject, unbind } from './index';
 
 const config = {
   apiKey: 'AIzaSyAUp5E2n1BhqYDeRsSqXvs9X90LVGFz5mY',
@@ -14,23 +9,17 @@ const config = {
 };
 
 firebase.initializeApp(config);
-const ref = firebase.database().ref('tests').push();
+const ref = firebase
+  .database()
+  .ref('tests')
+  .push();
 
 describe('bindAsArray(), bindAsObject() and unbind()', () => {
   it('should throw when missing bind variable', () => {
-    const err = new Error('ReduxFire: Bind variable must be a string. Got: undefined');
-    expect(() => { bindAsArray(); }).toThrow(err);
-    expect(() => { bindAsObject(); }).toThrow(err);
-    expect(() => { unbind(); }).toThrow(err);
+    [bindAsArray, bindAsObject, unbind].forEach(fn => expect(() => fn()).toThrow());
   });
 });
 
-describe('', () => {
+setDispatch();
 
-});
-it('should throw when missing bind variable', () => {
-  const err = new Error('ReduxFire: Bind variable must be a string. Got: undefined');
-  expect(() => { bindAsArray(); }).toThrow(err);
-  expect(() => { bindAsObject(); }).toThrow(err);
-});
-
+describe('', () => {});
