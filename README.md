@@ -6,14 +6,16 @@
 easy-to-use, realtime data source for populating redux's `state` by dispatching actions. With ReduxFire, it
 only takes a few lines of JavaScript to integrate Firebase data into your (pure|React|Angular|Vue|*) Redux application.
 
-This project aims to follow as closely as possible the API of the official [ReactFire](https://github.com/firebase/reactfire) package, with a few additional functionalities.
+This project aims to follow the API of the official [ReactFire](https://github.com/firebase/reactfire) package, with a few additional functionalities.
+
+
 
 ## Table of Contents
 
  * [Getting Started With Firebase](#getting-started-with-firebase)
- <!-- * [Downloading ReduxFire](#downloading-reduxfire) -->
+ * [Downloading ReduxFire](#downloading-reduxfire)
  * [Documentation](#documentation)
- <!-- * [Examples](#examples) -->
+ * [Example](#example)
  <!-- * [Release Notes](https://github.com/firebase/reactfire/releases) -->
  <!-- * [Migration Guides](#migration-guides) -->
  <!-- * [Contributing](#contributing) -->
@@ -27,10 +29,10 @@ base, and earn money. You can [sign up here for a free account](https://console.
 
 ## Downloading ReduxFire
 
-In order to use ReduxFire in your project, you can install it via npm. You will also have to install Redux, ReduxThunk and Firebase separately (that is, they are `peerDependencies`):
+In order to use ReduxFire in your project, you can install it via npm. You will probably also have to install Redux and Firebase:
 
 ```bash
-$ npm i -S redux redux-thunk firebase reduxfire
+$ npm i -S redux firebase reduxfire
 ```
 
 ## Documentation
@@ -39,13 +41,11 @@ $ npm i -S redux redux-thunk firebase reduxfire
 * [Guide](docs/guide.md)
 * [API Reference](docs/reference.md)
 
+## Example
 
-<!-- ## Examples
+Clone the product and run
 
-* [Todo App](examples/todoApp)
-* [Comments Box](examples/commentsBox) -->
-
-<!--## Contributing
-
-If you'd like to contribute to ReactFire, please first read through our [contribution
- guidelines](.github/CONTRIBUTING.md). Local setup instructions are available [here](.github/CONTRIBUTING.md#local-setup). -->
+```bash
+$ npm i
+$ npm run example
+```
