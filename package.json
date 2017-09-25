@@ -1,7 +1,7 @@
 {
   "name": "reduxfire",
   "version": "0.1.0",
-  "description": "",
+  "description": "Simple Firebase bindings for Redux",
   "main": "dist/reduxfire.cjs.js",
   "module": "dist/reduxfire.esm.js",
   "browser": "dist/reduxfire.umd.js",
@@ -32,5 +32,17 @@
   "jest": {
     "testEnvironment": "node"
   },
-  "dependencies": {}
+  "directories": {
+    "doc": "docs",
+    "example": "examples"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ThadeuLuz/reduxfire.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ThadeuLuz/reduxfire/issues"
+  },
+  "homepage": "https://github.com/ThadeuLuz/reduxfire#readme",
+  "keywords": ["Redux", "Firebase", "React"]
 }
