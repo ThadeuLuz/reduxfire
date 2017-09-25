@@ -1,5 +1,6 @@
 # ReduxFire
 
+![Travis](https://travis-ci.org/ThadeuLuz/reduxfire.svg?branch=master)
 
 [Redux](http://redux.js.org/) is a predictable state container for JavaScript apps. [Firebase](https://firebase.google.com/) complements it perfectly by providing an
 easy-to-use, realtime data source for populating redux's `state` by dispatching actions. With ReduxFire, it
