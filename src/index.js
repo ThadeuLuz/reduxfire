@@ -12,11 +12,17 @@ export { reducer };
 
 const unbindFunctions = {};
 
-// The default local dispatch throws an error if the dispatch is not set
-let dispatch = () => {
-  throwError("You have to call 'setDispatch(store.dispatch)' before calling 'unbind', 'bindAsArray' or 'bindAsObject'");
-};
+let dispatch;
 
+/**
+ * Throws an error if the dispatch is not set
+ */
+const validateDispatch = () => {
+  if (!dispatch) {
+    throwError("You have to call 'setDispatch(store.dispatch)' before calling 'unbind', " +
+        "'bindAsArray' or 'bindAsObject'");
+  }
+};
 
 /**
  * Sets the dispatch function on the library.
@@ -30,7 +36,6 @@ export const setDispatch = (dispatchFunction) => {
   dispatch = dispatchFunction;
 };
 
-
 /**
  * Creates a binding between Firebase and the inputted bind variable as an object.
  *
@@ -39,6 +44,7 @@ export const setDispatch = (dispatchFunction) => {
  * @param {function} cancelCallback - The Firebase reference's cancel callback.
  */
 export const bindAsObject = (firebaseRef, bindVar, cancelCallback) => {
+  validateDispatch();
   validateBindVar(bindVar);
   validateFirebaseRef(firebaseRef);
 
@@ -69,6 +75,7 @@ export const bindAsObject = (firebaseRef, bindVar, cancelCallback) => {
  * @param {function} cancelCallback - The Firebase reference's cancel callback.
  */
 export const bindAsArray = (firebaseRef, bindVar, cancelCallback) => {
+  validateDispatch();
   validateBindVar(bindVar);
   validateFirebaseRef(firebaseRef);
 
@@ -110,7 +117,8 @@ export const bindAsArray = (firebaseRef, bindVar, cancelCallback) => {
  * @param {string} bindVar - The state variable to which the data is bound.
  * @param {function} callback - Called when the data is unbound and the state has been updated.
  */
-export const unbind = (bindVar, callback = () => { }) => {
+export const unbind = (bindVar, callback = () => {}) => {
+  validateDispatch();
   validateBindVar(bindVar);
   const unbindFunction = unbindFunctions[bindVar];
 
