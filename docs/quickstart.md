@@ -10,22 +10,18 @@ The first thing we need to do is [sign up for a free Firebase account](https://f
 
 ## 2. Include Firebase and ReduxFire
 
-To use ReduxFire in our website, we need to add it along with all its dependencies to the `<head>`
-section of our HTML file. We recommend including the Firebase and ReduxFire libraries directly from
-our CDN:
+To use ReduxFire in our website, we need to add it along with all its dependencies to the `<head>` section of our HTML file:
 
 
 ```js
 <!-- Redux -->
 <script src="https://unpkg.com/redux@latest/dist/redux.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/redux-thunk/2.2.0/redux-thunk.js"></script>
 
 <!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>
 
 <!-- ReduxFire -->
-// TODO: Add link to minified version
-<script src=""></script>
+<script src="reduxfie.umd.js"></script>
 ```
 
 ReduxFire and its dependencies are also available from npm via `npm i reduxfire`.
@@ -61,16 +57,13 @@ ReduxFire exposes a [`reducer`](http://redux.js.org/docs/basics/Reducers.html) w
 
  This reducer will allow us to dispatch actions that update our state with a **one-way data binding from our Firebase database to our Redux's `state`**. Add the `reducer` when creating your store, optionally combining with other reducers. Also, do not forget to apply the [`redux-thunk`](https://github.com/gaearon/redux-thunk) middleware:
 
-```js
-const rootReducer = combineReducers({
+```JavaScript
+const store = createStore(combineReducers({
   // ... your other reducers here ...
-  firebaseData: reducer
+  firebaseData: ReduxFire.reducer
 });
 
-const store = createStore(
-  rootReducer,
-  applyMiddleware(ReduxThunk.default)
-);
+ReduxFire.setDispatch(store.dispatch);
 ```
 
 In this example we are using `firebaseData` as the key for combining reducers. This means that the state returned by our reducer will be stored under this key. Feel free to use anything else if you wish, but `firebaseData` will be used on the rest of this guide.
