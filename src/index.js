@@ -132,3 +132,14 @@ export const unbind = (bindVar, callback = () => {}) => {
 
   unbindFunction(callback);
 };
+
+/**
+ * Checks if a bindVar is already bound
+ *
+ * @param {string} bindVar - The state variable to check.
+ * @returns {boolean} - True if the variable is bound, false otherwise.
+ */
+export const isBound = (bindVar) => {
+  validateBindVar(bindVar);
+  return !!unbindFunctions[bindVar];
+};
