@@ -1,6 +1,6 @@
 {
   "name": "reduxfire",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Simple Firebase bindings for Redux",
   "main": "dist/reduxfire.cjs.js",
   "module": "dist/reduxfire.esm.js",
@@ -44,5 +44,9 @@
     "url": "https://github.com/ThadeuLuz/reduxfire/issues"
   },
   "homepage": "https://github.com/ThadeuLuz/reduxfire#readme",
-  "keywords": ["Redux", "Firebase", "React"]
+  "keywords": [
+    "Redux",
+    "Firebase",
+    "React"
+  ]
 }
