@@ -1,4 +1,4 @@
-# ReduxFire ![Travis](https://travis-ci.org/ThadeuLuz/reduxfire.svg?branch=master) [![Coverage Status](https://coveralls.io/repos/github/ThadeuLuz/reduxfire/badge.svg)](https://coveralls.io/github/ThadeuLuz/reduxfire) [![npm version](https://badge.fury.io/js/reduxfire.svg)](https://badge.fury.io/js/reduxfire)
+# ReduxFire ![Travis](https://travis-ci.org/ThadeuLuz/reduxfire.svg?branch=master) [![npm version](https://badge.fury.io/js/reduxfire.svg)](https://badge.fury.io/js/reduxfire)
 
 [Redux](http://redux.js.org/) is a predictable state container for JavaScript apps. [Firebase](https://firebase.google.com/) complements it perfectly by providing an
 easy-to-use, realtime data source for populating redux's `state` by dispatching actions. With ReduxFire, it
